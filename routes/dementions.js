@@ -23,13 +23,7 @@ router.get("/get_prices", async (req, res) => {
       service_id,
       price_group_id,
     } = req.query;
-    const prices = await selectPrices(
-      car_group_id,
-      wheel_size_id,
-      wheel_type_id,
-      service_id,
-      price_group_id
-    );
+    const prices = await selectPrices(price_group_id);
     res.status(200).json(prices);
   } catch (error) {
     res.status(500).json({ error: error.message });

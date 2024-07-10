@@ -1,0 +1,10 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "DevConnGS",
+            "database": "${workspaceFolder:Backend.Node.JS}/database/goodshin.db"
+        }
+    ]
+}

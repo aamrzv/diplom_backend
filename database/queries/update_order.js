@@ -1,5 +1,8 @@
 const sqlite3 = require("sqlite3");
 const { dbPath } = require("../../constants");
+const {
+  getCurrentLocalDateTime,
+} = require("../../utils/get-current-date-time");
 
 // Функция для вставки заказа
 const updateOrder = async (jsonData, userId) => {
@@ -11,11 +14,7 @@ const updateOrder = async (jsonData, userId) => {
       0
     );
     const orderId = jsonData.orderId;
-    const orderChangeDate = new Date()
-      .toISOString()
-      .slice(0, 19)
-      .replace("T", " ");
-
+    const orderChangeDate = getCurrentLocalDateTime();
     // Начинаем транзакцию
     await new Promise((resolve, reject) => {
       conn.run("BEGIN TRANSACTION", (err) => {

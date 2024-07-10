@@ -33,7 +33,9 @@ router.post("/insert_order", authorize([1, 2]), async (req, res) => {
       });
     });
     const sessionKey = req.headers["authorization"];
-    const userId = selectUserIdBySessionKey(sessionKey);
+    const [userId, userRoleId, error] = await selectUserIdBySessionKey(
+      sessionKey
+    );
     const newOrder = await insertOrder(data, userId);
     res.status(201).json({
       orderId: newOrder.orderInsert,
@@ -92,13 +94,12 @@ router.delete("/delete_order", authorize([1, 2]), async (req, res) => {
   }
 });
 
-router.post("/update_order", authorize([1, 2]), async (req, res) => {
+router.put("/update_order", authorize([1, 2]), async (req, res) => {
   try {
     const data = req.body;
     if (!data) {
       throw new Error("No JSON data provided");
     }
-
     const requiredFields = ["priceId", "amount"];
     data.detail.forEach((item) => {
       requiredFields.forEach((field) => {
@@ -110,7 +111,9 @@ router.post("/update_order", authorize([1, 2]), async (req, res) => {
       });
     });
     const sessionKey = req.headers["authorization"];
-    const userId = selectUserIdBySessionKey(sessionKey);
+    const [userId, userRoleId, error] = await selectUserIdBySessionKey(
+      sessionKey
+    );
     const editOrder = await updateOrder(data, userId);
     res.status(201).json(editOrder);
   } catch (error) {

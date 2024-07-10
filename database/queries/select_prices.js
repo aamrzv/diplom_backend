@@ -9,6 +9,7 @@ const all = promisify(db.all).bind(db);
 
 // Функция для выбора списка заказов по идентификатору контрактора
 const selectPrices = async (priceGroupId) => {
+  console.log(priceGroupId);
   priceGroupId = priceGroupId || 1;
   const sql = `
     SELECT	 pg.price_group_id 					      AS priceGroupId

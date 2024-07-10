@@ -1,6 +1,9 @@
 const sqlite3 = require("sqlite3");
 const { dbPath } = require("../../constants");
 const { getContractId } = require("./select_contract_id_by_car_id");
+const {
+  getCurrentLocalDateTime,
+} = require("../../utils/get-current-date-time");
 
 // Функция для вставки заказа
 const insertOrder = async (jsonData, userId) => {
@@ -9,7 +12,7 @@ const insertOrder = async (jsonData, userId) => {
   try {
     const contractId = await getContractId(jsonData.carId);
     const nextActNumber = (await selectMaxActNumber(contractId)) + 1;
-    const orderDate = new Date().toISOString().slice(0, 19).replace("T", " ");
+    const orderDate = getCurrentLocalDateTime();
     const orderAmount = jsonData.detail.reduce(
       (acc, item) => acc + item.amount,
       0

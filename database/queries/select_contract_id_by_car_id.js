@@ -6,7 +6,7 @@ const getContractId = (carId) => {
   return new Promise((resolve, reject) => {
     const conn = new sqlite3.Database(dbPath);
     conn.get(
-      "SELECT contract_id FROM cars cr LEFT JOIN contracts cn ON cn.contractor_id = cr.owner_id WHERE car_id = ?",
+      "SELECT contract_id FROM cars cr JOIN contracts cn ON cn.contractor_id = cr.owner_id WHERE owner_type_id=1 AND car_id = ?",
       [carId],
       (err, row) => {
         if (err) reject(err);
